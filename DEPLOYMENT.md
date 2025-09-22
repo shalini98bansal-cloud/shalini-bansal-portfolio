@@ -1,107 +1,144 @@
-# GitHub Pages Deployment Guide
+# Deployment Guide
 
-## Quick Setup
+This guide covers different ways to deploy your React portfolio to various hosting platforms.
 
-### 1. Create GitHub Repository
-1. Go to [GitHub.com](https://github.com) and sign in
-2. Click the "+" icon in the top right corner
-3. Select "New repository"
-4. Name your repository (e.g., `shalini-bansal-portfolio`)
-5. Make it **Public** (required for free GitHub Pages)
-6. Don't initialize with README (we already have files)
-7. Click "Create repository"
+## 🚀 Quick Deploy Options
 
-### 2. Upload Your Files
-1. In your new repository, click "uploading an existing file"
-2. Drag and drop all the files from your project folder:
-   - `index.html`
-   - `styles.css`
-   - `script.js`
-   - `README.md`
-   - `404.html`
-   - `.gitignore`
-   - `CNAME` (optional)
+### 1. Vercel (Recommended)
+1. Push your code to GitHub
+2. Go to [vercel.com](https://vercel.com)
+3. Import your GitHub repository
+4. Vercel will auto-detect it's a Vite React app
+5. Deploy with default settings
 
-### 3. Enable GitHub Pages
-1. Go to your repository **Settings** tab
-2. Scroll down to the **Pages** section (left sidebar)
-3. Under "Source", select **"Deploy from a branch"**
-4. Choose **"main"** branch
-5. Select **"/ (root)"** folder
-6. Click **"Save"**
+**Build Command:** `npm run build`  
+**Output Directory:** `dist`
 
-### 4. Access Your Website
-- Your site will be available at: `https://yourusername.github.io/repository-name`
-- It may take a few minutes to deploy initially
-- You'll see a green checkmark when deployment is complete
+### 2. Netlify
+1. Push your code to GitHub
+2. Go to [netlify.com](https://netlify.com)
+3. Click "New site from Git"
+4. Connect your GitHub repository
+5. Set build settings:
+   - **Build Command:** `npm run build`
+   - **Publish Directory:** `dist`
+6. Deploy
 
-## Alternative: Using Git Commands
+### 3. GitHub Pages
+1. Update `vite.config.ts`:
+   ```typescript
+   export default defineConfig({
+     base: '/your-repo-name/', // Replace with your actual repo name
+     plugins: [react()],
+   })
+   ```
 
-If you prefer using Git from the command line:
+2. Install GitHub Pages deploy plugin:
+   ```bash
+   npm install --save-dev gh-pages
+   ```
+
+3. Add deploy script to `package.json`:
+   ```json
+   {
+     "scripts": {
+       "deploy": "npm run build && gh-pages -d dist"
+     }
+     "homepage": "https://yourusername.github.io/your-repo-name"
+   }
+   ```
+
+4. Deploy:
+   ```bash
+   npm run deploy
+   ```
+
+### 4. Firebase Hosting
+1. Install Firebase CLI:
+   ```bash
+   npm install -g firebase-tools
+   ```
+
+2. Initialize Firebase:
+   ```bash
+   firebase init hosting
+   ```
+
+3. Configure:
+   - **Public directory:** `dist`
+   - **Single-page app:** Yes
+   - **Auto-build:** No
+
+4. Build and deploy:
+   ```bash
+   npm run build
+   firebase deploy
+   ```
+
+## 🔧 Environment Variables
+
+For production deployments, you may want to set environment variables:
 
 ```bash
-# Initialize git repository
-git init
-
-# Add all files
-git add .
-
-# Commit files
-git commit -m "Initial portfolio website"
-
-# Add remote repository (replace with your repository URL)
-git remote add origin https://github.com/yourusername/your-repo-name.git
-
-# Push to GitHub
-git push -u origin main
+# .env.production
+VITE_SITE_URL=https://yourdomain.com
+VITE_CONTACT_EMAIL=your.email@example.com
 ```
 
-## Custom Domain (Optional)
+## 📝 Pre-Deployment Checklist
 
-If you want to use a custom domain:
+- [ ] Update content in `src/data/content.ts`
+- [ ] Add your resume PDF to `public/resume.pdf`
+- [ ] Update meta tags in `index.html`
+- [ ] Test the build locally: `npm run build && npm run preview`
+- [ ] Verify all links work correctly
+- [ ] Test responsive design on mobile
+- [ ] Check accessibility with browser dev tools
 
-1. Purchase a domain from a provider (Namecheap, GoDaddy, etc.)
-2. Edit the `CNAME` file in your repository
-3. Add your domain name (e.g., `shalini-bansal.com`)
-4. Configure DNS settings with your domain provider:
-   - Add a CNAME record pointing to `yourusername.github.io`
-5. In GitHub Pages settings, add your custom domain
+## 🎯 Custom Domain (Optional)
 
-## Updating Your Website
+### Vercel
+1. Go to your project dashboard
+2. Click "Domains" tab
+3. Add your custom domain
+4. Follow DNS configuration instructions
 
-To update your website:
+### Netlify
+1. Go to Site settings → Domain management
+2. Add custom domain
+3. Configure DNS as instructed
 
-1. Make changes to your local files
-2. Upload the updated files to GitHub (or use git commands)
-3. GitHub Pages will automatically rebuild and deploy your site
+### GitHub Pages
+1. Create `CNAME` file in `public/` folder
+2. Add your domain name to the file
+3. Configure DNS with your domain provider
 
-## Troubleshooting
+## 📊 Performance Optimization
 
-### Common Issues:
+After deployment, consider:
 
-1. **Site not loading**: Check that your repository is public
-2. **404 errors**: Ensure `index.html` is in the root directory
-3. **Styling issues**: Check that `styles.css` is properly linked
-4. **Custom domain not working**: Verify DNS settings and CNAME file
+1. **Enable compression** on your hosting platform
+2. **Set up CDN** for faster global delivery
+3. **Configure caching headers** for static assets
+4. **Monitor Core Web Vitals** using Google PageSpeed Insights
 
-### GitHub Pages Status:
-- Check the "Actions" tab in your repository for deployment status
-- Green checkmark = successful deployment
-- Red X = deployment failed (check the logs)
+## 🔍 SEO Checklist
 
-## Performance Tips
+- [ ] Update `title` and `meta description` in `index.html`
+- [ ] Add Open Graph tags for social sharing
+- [ ] Submit sitemap to Google Search Console
+- [ ] Test with Google's Rich Results Test
+- [ ] Verify structured data if applicable
 
-1. **Optimize images**: Compress images before uploading
-2. **Minimize files**: Remove unnecessary code and comments
-3. **Use CDN**: External libraries (Font Awesome, Google Fonts) load from CDN
-4. **Enable caching**: GitHub Pages automatically handles caching
+## 📱 PWA Features (Optional)
 
-## Security
+To make your portfolio a Progressive Web App:
 
-- Your repository is public, so don't include sensitive information
-- The contact form uses mailto: links (no server-side processing needed)
-- All external links open in new tabs for security
+1. Add a web app manifest in `public/manifest.json`
+2. Add service worker for offline functionality
+3. Configure icons for different device sizes
+4. Enable "Add to Home Screen" functionality
 
 ---
 
-**Need help?** Check the [GitHub Pages documentation](https://docs.github.com/en/pages) or contact GitHub support.
+Your portfolio is now live! 🎉
