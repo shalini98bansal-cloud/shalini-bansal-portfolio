@@ -1,101 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found - Shalini Bansal</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .error-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #B87D4B 0%, #523A34 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
-        .error-content h1 {
-            font-size: 6rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #F2DD6E;
-        }
-        .error-content h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .error-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        .error-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-            border: 2px solid transparent;
-        }
-        .btn-primary {
-            background-color: #F2DD6E;
-            color: #523A34;
-        }
-        .btn-primary:hover {
-            background-color: #E5B25D;
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: white;
-            border-color: white;
-        }
-        .btn-secondary:hover {
-            background-color: white;
-            color: #523A34;
-            transform: translateY(-2px);
-        }
-        @media (max-width: 768px) {
-            .error-content h1 {
-                font-size: 4rem;
-            }
-            .error-content h2 {
-                font-size: 1.5rem;
-            }
-            .error-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="error-container">
-        <div class="error-content">
-            <h1>404</h1>
-            <h2>Page Not Found</h2>
-            <p>Sorry, the page you are looking for doesn't exist or has been moved.</p>
-            <div class="error-buttons">
-                <a href="/" class="btn btn-primary">
-                    <i class="fas fa-home"></i> Go Home
-                </a>
-                <a href="/#contact" class="btn btn-secondary">
-                    <i class="fas fa-envelope"></i> Contact Me
-                </a>
-            </div>
-        </div>
-    </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shalini Bansal - Portfolio</title>
+    <script>
+      // GitHub Pages SPA redirect
+      // This script takes the current URL and redirects to the index.html
+      // with the path as a query parameter, then the React Router will handle it
+      var pathSegmentsToKeep = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/project1/index.js"></script>
+  </body>
 </html>
